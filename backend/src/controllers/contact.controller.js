@@ -26,3 +26,22 @@ export const submitForm = async (req, res) => {
     });
   }
 };
+
+export const getAllContacts = async (req, res) => {
+  try {
+    const contacts = await ContactModel.find().sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      success: true,
+      message: "Fetched all contacts successfully",
+      count: contacts.length,
+      contacts,
+    });
+  } catch (error) {
+    console.error("getAllContacts error : ", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch All Contacts",
+    });
+  }
+};
